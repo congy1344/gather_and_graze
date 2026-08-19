@@ -4,6 +4,16 @@ A bilingual recipe discovery and weekly meal-planning experience built as a fron
 
 [Live demo](https://gather-graze-planner.vercel.app/) · [View source](https://github.com/congy1344/gather_and_graze)
 
+## Highlights
+
+- Bilingual English/Vietnamese content with accent-insensitive search.
+- Persistent seven-day meal planner with add, replace, remove, and undo flows.
+- Accessibility-focused UI backed by automated test, lint, and build checks.
+
+**Role / ownership:** Solo project — product design, frontend development, testing, and deployment.
+
+**Tech stack:** React 18 · React Router 7 · Vite 8 · Context API · native CSS · Node.js test runner · GitHub Actions · Vercel
+
 ![Gather & Graze recipe discovery interface](docs/preview.png)
 
 ## Overview
@@ -27,7 +37,7 @@ The project prioritizes useful product behavior over dashboard-style decoration.
 - **Honest content:** no invented ratings, popularity claims, nutrition data, or artificial loading delays.
 - **Explicit planner states:** adding, replacing, and removing meals use distinct labels and reversible feedback.
 - **Accessible interaction:** keyboard focus styles, skip navigation, route focus management, modal focus trapping, status announcements, and reduced-motion support.
-- **Non-template visual direction:** restrained color, editorial typography, varied composition, and minimal decorative UI keep the interface from feeling AI-generated.
+- **Distinctive visual direction:** restrained color, editorial typography, varied composition, and minimal decorative UI create a recognizable visual identity.
 
 ## Screens
 
@@ -82,9 +92,9 @@ npm audit
 
 The automated tests cover bilingual recipe integrity, localized search, combined filtering and sorting, and immutable meal-plan updates. Browser integration and visual-regression tests are not included yet.
 
-## Current scope
+## Scope & future work
 
-This is a client-side portfolio project with 12 curated local recipes. It has no account system, backend sync, nutrition calculation, or offline image storage. Favorites, planner data, language, and theme are stored only in the current browser.
+The current version is intentionally client-side and uses 12 curated local recipes, with favorites, planner data, language, and theme stored in the browser. Future iterations could add authentication, backend synchronization, nutrition data, and offline support.
 
 ## Author
 
