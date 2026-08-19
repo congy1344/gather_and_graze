@@ -2,7 +2,7 @@
 
 A bilingual recipe discovery and weekly meal-planning experience built as a frontend and UX portfolio project.
 
-[Live demo](https://gather-graze-planner.vercel.app/) · [View source](https://github.com/congy1344/HuynhCongY-Demo-UXUI)
+[Live demo](https://gather-graze-planner.vercel.app/) · [View source](https://github.com/congy1344/gather_and_graze)
 
 ![Gather & Graze recipe discovery interface](docs/preview.png)
 
@@ -65,8 +65,8 @@ src/
 Requires Node.js 20.19 or later.
 
 ```bash
-git clone https://github.com/congy1344/HuynhCongY-Demo-UXUI.git
-cd HuynhCongY-Demo-UXUI
+git clone https://github.com/congy1344/gather_and_graze.git
+cd gather_and_graze
 npm ci
 npm run dev
 ```
