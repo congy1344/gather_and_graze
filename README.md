@@ -1,59 +1,64 @@
 # Gather & Graze
 
-Ứng dụng React SPA giúp người nấu tại nhà tìm công thức, lưu món yêu thích và lên lịch bữa ăn trong tuần. Dự án được xây dựng như một case study frontend/UX cho portfolio intern: phạm vi nhỏ, luồng chính hoàn chỉnh và các quyết định sản phẩm có thể giải thích được.
+A bilingual recipe discovery and weekly meal-planning experience built as a frontend and UX portfolio project.
 
-**Public demo:** chưa xuất bản. Deployment Vercel hiện bật bảo vệ đăng nhập; xem hướng dẫn chạy local bên dưới.
+[Live demo](https://gather-graze-planner.vercel.app/) · [View source](https://github.com/congy1344/HuynhCongY-Demo-UXUI)
 
-> Bản deploy dùng dữ liệu mẫu và lưu lựa chọn ngay trong trình duyệt; không có tài khoản hay backend.
+![Gather & Graze recipe discovery interface](docs/preview.png)
 
-## Bài toán và người dùng
+## Overview
 
-Người dùng mục tiêu là người tự nấu ăn, muốn quyết định “hôm nay ăn gì” nhanh hơn và gom các lựa chọn trong tuần vào một nơi. Sản phẩm ưu tiên ba tác vụ:
+Home cooks often decide what to eat across scattered recipe pages, saved links, and notes. Gather & Graze brings that journey into one focused flow: discover a recipe, understand the time required, save it, and place it into a weekly plan.
 
-1. Tìm món theo từ khóa, danh mục và thời gian chuẩn bị.
-2. Đọc công thức, đổi số khẩu phần và đánh dấu từng bước đã làm.
-3. Thêm, thay thế hoặc xóa món trong lịch tuần với phản hồi rõ ràng và khả năng hoàn tác.
+The project prioritizes useful product behavior over dashboard-style decoration. Every visible metric comes from the local recipe data, actions provide clear feedback, and the complete recipe content is available in both English and Vietnamese.
 
-## Luồng chính
+## Core experience
 
-- **Khám phá:** trang chủ → bộ sưu tập → tìm/lọc/sắp xếp → chi tiết công thức.
-- **Nấu ăn:** chi tiết → điều chỉnh khẩu phần → theo dõi các bước.
-- **Lập kế hoạch:** chi tiết hoặc Meal Planner → chọn ngày → thêm/thay món → hoàn tác nếu cần.
-- **Quay lại:** lưu món yêu thích, lịch tuần, ngôn ngữ và theme bằng `localStorage`.
+- Search recipes by localized name, ingredient, category, or tag, with accent-insensitive matching.
+- Filter by meal category and sort by name or preparation time.
+- Read localized ingredients and instructions, scale serving quantities, and mark cooking steps as complete.
+- Save favorites and persist preferences in `localStorage`.
+- Add, replace, remove, and undo meals in a seven-day planner.
+- Switch between English and Vietnamese, light and dark themes, and responsive layouts.
 
-## Quyết định thiết kế
+## Product and UX decisions
 
-- Nội dung công thức có bản tiếng Việt và tiếng Anh thay vì chỉ dịch lớp giao diện.
-- Card chỉ hiển thị dữ liệu có thật trong mock data; không dùng rating hoặc số liệu giả để “làm đầy” giao diện.
-- Hành động làm thay đổi lịch tuần có trạng thái phản hồi, phân biệt thêm/thay/xóa và hỗ trợ undo.
-- Visual hierarchy tập trung vào tên món, thời gian và CTA chính; giảm badge, gradient và các khối trang trí thường làm UI trông như template AI.
-- Navigation, modal và điều khiển tương tác có nhãn truy cập bàn phím; giao diện tôn trọng `prefers-reduced-motion`.
+- **Task-first hierarchy:** recipe name, preparation time, total time, and the next action are visually prioritized.
+- **Honest content:** no invented ratings, popularity claims, nutrition data, or artificial loading delays.
+- **Explicit planner states:** adding, replacing, and removing meals use distinct labels and reversible feedback.
+- **Accessible interaction:** keyboard focus styles, skip navigation, route focus management, modal focus trapping, status announcements, and reduced-motion support.
+- **Non-template visual direction:** restrained color, editorial typography, varied composition, and minimal decorative UI keep the interface from feeling AI-generated.
 
-## Trade-offs và giới hạn
+## Screens
 
-- Dữ liệu chỉ là 12 công thức mẫu, không đồng bộ giữa thiết bị và sẽ mất khi xóa storage của trình duyệt.
-- Không có đăng nhập, backend, giỏ nguyên liệu hoặc tính toán dinh dưỡng.
-- Unit test hiện tập trung vào logic thuần của tìm kiếm/lọc và meal plan. Chưa có integration test trên trình duyệt hoặc kiểm thử trực quan tự động.
-- Ảnh món ăn dùng URL bên ngoài, nên cần mạng để hiển thị đầy đủ.
+| Recipe discovery | Weekly planner |
+| --- | --- |
+| ![Searchable recipe collection](docs/recipes-page.png) | ![Seven-day meal planner](docs/meal-planner-page.png) |
 
-## Kiến trúc
+## Technical approach
+
+- React 18 and React Router 7
+- Vite 8
+- Context API and custom hooks
+- Native CSS with design tokens and responsive breakpoints
+- Node.js built-in test runner and ESLint
+- GitHub Actions for test, lint, and production-build checks
+- Vercel SPA rewrite support for direct route access
 
 ```text
 src/
-├─ components/       UI dùng lại: layout, modal, filter, recipe card
-├─ context/          dữ liệu ứng dụng và tùy chọn giao diện
-├─ data/             công thức mẫu và bản dịch
-├─ hooks/            localStorage, debounce và filter
-├─ pages/            các route cấp trang
-├─ styles/           design tokens và responsive CSS
-└─ utils/            logic thuần có thể unit test
+├─ components/   Reusable layout, controls, modal, and recipe UI
+├─ context/      Application data and interface preferences
+├─ data/         Bilingual recipe content and translations
+├─ hooks/        Debounce, filtering, and local persistence
+├─ pages/        Route-level product flows
+├─ styles/       Tokens, responsive layout, and motion
+└─ utils/        Pure, unit-tested search and planner logic
 ```
 
-Stack: React 18, React Router 7, Vite 8, Context API, CSS thuần, ESLint và Node test runner. Không dùng UI framework hoặc thư viện state bên ngoài.
+## Run locally
 
-## Chạy local
-
-Yêu cầu Node.js `20.19+` và npm.
+Requires Node.js 20.19 or later.
 
 ```bash
 git clone https://github.com/congy1344/HuynhCongY-Demo-UXUI.git
@@ -62,9 +67,7 @@ npm ci
 npm run dev
 ```
 
-Vite sẽ in địa chỉ local trong terminal, mặc định là `http://localhost:5173`.
-
-## Kiểm tra chất lượng
+## Quality checks
 
 ```bash
 npm test
@@ -73,4 +76,12 @@ npm run build
 npm audit
 ```
 
-GitHub Actions chạy bốn gate đầu tiên (`npm ci`, test, lint, build) trên mỗi push và pull request. Muốn đặt lại dữ liệu demo, xóa các key bắt đầu bằng `gather:` trong `localStorage`.
+The automated tests cover bilingual recipe integrity, localized search, combined filtering and sorting, and immutable meal-plan updates. Browser integration and visual-regression tests are not included yet.
+
+## Current scope
+
+This is a client-side portfolio project with 12 curated local recipes. It has no account system, backend sync, nutrition calculation, or offline image storage. Favorites, planner data, language, and theme are stored only in the current browser.
+
+## Author
+
+Designed and developed by [Huynh Cong Y](https://github.com/congy1344).
