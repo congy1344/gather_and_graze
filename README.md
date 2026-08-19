@@ -31,9 +31,13 @@ The project prioritizes useful product behavior over dashboard-style decoration.
 
 ## Screens
 
-| Recipe discovery | Weekly planner |
+| Discover | Recipe collection |
 | --- | --- |
-| ![Searchable recipe collection](docs/recipes-page.png) | ![Seven-day meal planner](docs/meal-planner-page.png) |
+| ![Gather and Graze discovery page](docs/preview.png) | ![Searchable recipe collection](docs/recipes-page.png) |
+
+| Weekly planner | Saved favorites |
+| --- | --- |
+| ![Seven-day meal planner](docs/meal-planner-page.png) | ![Saved recipe collection](docs/favorites-page.png) |
 
 ## Technical approach
 
