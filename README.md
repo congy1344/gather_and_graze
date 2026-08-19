@@ -1,116 +1,76 @@
 # Gather & Graze
 
-Gather & Graze là ứng dụng web quản lý công thức và lập kế hoạch bữa ăn được xây dựng dưới dạng React SPA. Dự án tập trung trình diễn kỹ năng thiết kế UX/UI, tổ chức component React và quản lý trạng thái phía client.
+Ứng dụng React SPA giúp người nấu tại nhà tìm công thức, lưu món yêu thích và lên lịch bữa ăn trong tuần. Dự án được xây dựng như một case study frontend/UX cho portfolio intern: phạm vi nhỏ, luồng chính hoàn chỉnh và các quyết định sản phẩm có thể giải thích được.
 
-Ứng dụng cho phép người dùng khám phá công thức, tìm kiếm và lọc món ăn, lưu món yêu thích, xem hướng dẫn nấu chi tiết và lên lịch món ăn cho từng ngày trong tuần. Toàn bộ dữ liệu được mô phỏng ở frontend và không yêu cầu backend.
+**Public demo:** chưa xuất bản. Deployment Vercel hiện bật bảo vệ đăng nhập; xem hướng dẫn chạy local bên dưới.
 
-## Live Demo
+> Bản deploy dùng dữ liệu mẫu và lưu lựa chọn ngay trong trình duyệt; không có tài khoản hay backend.
 
-[Trải nghiệm Gather & Graze trên Vercel](https://huynh-cong-y-demo-uxui-rhyoih5g6.vercel.app/)
+## Bài toán và người dùng
 
-## Preview
+Người dùng mục tiêu là người tự nấu ăn, muốn quyết định “hôm nay ăn gì” nhanh hơn và gom các lựa chọn trong tuần vào một nơi. Sản phẩm ưu tiên ba tác vụ:
 
-### Trang chủ - Dark mode
+1. Tìm món theo từ khóa, danh mục và thời gian chuẩn bị.
+2. Đọc công thức, đổi số khẩu phần và đánh dấu từng bước đã làm.
+3. Thêm, thay thế hoặc xóa món trong lịch tuần với phản hồi rõ ràng và khả năng hoàn tác.
 
-![Giao diện trang chủ Gather & Graze](docs/preview.png)
+## Luồng chính
 
-### Công thức nổi bật
+- **Khám phá:** trang chủ → bộ sưu tập → tìm/lọc/sắp xếp → chi tiết công thức.
+- **Nấu ăn:** chi tiết → điều chỉnh khẩu phần → theo dõi các bước.
+- **Lập kế hoạch:** chi tiết hoặc Meal Planner → chọn ngày → thêm/thay món → hoàn tác nếu cần.
+- **Quay lại:** lưu món yêu thích, lịch tuần, ngôn ngữ và theme bằng `localStorage`.
 
-![Danh sách công thức nổi bật](docs/preview2.png)
+## Quyết định thiết kế
 
-### Danh mục công thức
+- Nội dung công thức có bản tiếng Việt và tiếng Anh thay vì chỉ dịch lớp giao diện.
+- Card chỉ hiển thị dữ liệu có thật trong mock data; không dùng rating hoặc số liệu giả để “làm đầy” giao diện.
+- Hành động làm thay đổi lịch tuần có trạng thái phản hồi, phân biệt thêm/thay/xóa và hỗ trợ undo.
+- Visual hierarchy tập trung vào tên món, thời gian và CTA chính; giảm badge, gradient và các khối trang trí thường làm UI trông như template AI.
+- Navigation, modal và điều khiển tương tác có nhãn truy cập bàn phím; giao diện tôn trọng `prefers-reduced-motion`.
 
-![Trang danh mục công thức](docs/recipes-page.png)
+## Trade-offs và giới hạn
 
-### Lịch món ăn
+- Dữ liệu chỉ là 12 công thức mẫu, không đồng bộ giữa thiết bị và sẽ mất khi xóa storage của trình duyệt.
+- Không có đăng nhập, backend, giỏ nguyên liệu hoặc tính toán dinh dưỡng.
+- Unit test hiện tập trung vào logic thuần của tìm kiếm/lọc và meal plan. Chưa có integration test trên trình duyệt hoặc kiểm thử trực quan tự động.
+- Ảnh món ăn dùng URL bên ngoài, nên cần mạng để hiển thị đầy đủ.
 
-![Trang lập kế hoạch món ăn trong tuần](docs/meal-planner-page.png)
+## Kiến trúc
 
-### Món yêu thích
+```text
+src/
+├─ components/       UI dùng lại: layout, modal, filter, recipe card
+├─ context/          dữ liệu ứng dụng và tùy chọn giao diện
+├─ data/             công thức mẫu và bản dịch
+├─ hooks/            localStorage, debounce và filter
+├─ pages/            các route cấp trang
+├─ styles/           design tokens và responsive CSS
+└─ utils/            logic thuần có thể unit test
+```
 
-![Trang danh sách món yêu thích](docs/favorites-page.png)
+Stack: React 18, React Router 7, Vite 8, Context API, CSS thuần, ESLint và Node test runner. Không dùng UI framework hoặc thư viện state bên ngoài.
 
-### Trang chủ - Light mode
+## Chạy local
 
-![Giao diện trang chủ ở chế độ sáng](docs/light-mode.png)
-
-## Tech Stack
-
-- **React 18:** xây dựng giao diện bằng functional components
-- **React Router v6:** điều hướng giữa các trang trong SPA
-- **Vite:** môi trường phát triển và production build
-- **JavaScript:** ngôn ngữ chính của dự án
-- **Pure CSS:** design system, responsive layout và animations
-- **Context API:** quản lý trạng thái dùng chung
-- **localStorage:** lưu món yêu thích, lịch món ăn, ngôn ngữ và giao diện
-- **ESLint:** kiểm tra chất lượng mã nguồn
-
-## Features
-
-- Trang chủ editorial với món ăn nổi bật, thống kê và danh sách phổ biến
-- Danh sách 12 công thức món ăn từ mock data
-- Tìm kiếm công thức theo tên với debounce
-- Lọc theo danh mục và sắp xếp theo tên, thời gian chuẩn bị hoặc đánh giá
-- Trang chi tiết công thức với nguyên liệu, hướng dẫn và điều chỉnh khẩu phần
-- Đánh dấu hoàn thành từng bước nấu ăn
-- Thêm hoặc xóa công thức khỏi danh sách yêu thích
-- Lập kế hoạch món ăn từ Thứ Hai đến Chủ Nhật
-- Thêm, thay đổi hoặc xóa món ăn trong lịch tuần
-- Chuyển đổi ngôn ngữ Tiếng Việt và Tiếng Anh
-- Chuyển đổi giao diện sáng và tối
-- Lưu trạng thái người dùng bằng `localStorage`
-- Loading skeleton, empty state và route transition
-- Responsive trên desktop, tablet và mobile
-- Modal hỗ trợ focus trap, phím `Escape` và thao tác bàn phím
-
-## React Concepts Used
-
-- **Functional Components:** toàn bộ giao diện được xây dựng bằng function components
-- **Props:** truyền dữ liệu và callback vào các component tái sử dụng
-- **`useState`:** quản lý bộ lọc, tìm kiếm, modal, khẩu phần và mobile navigation
-- **`useEffect`:** mô phỏng tải dữ liệu, đồng bộ theme, ngôn ngữ và scroll restoration
-- **`useContext`:** chia sẻ recipes, favorites, meal plan và UI preferences
-- **`useReducer`:** quản lý trạng thái hoàn thành các bước nấu ăn
-- **`useMemo`:** tính dữ liệu thống kê, món nổi bật và danh sách sau khi lọc
-- **`useCallback`:** giữ ổn định các hàm cập nhật trạng thái dùng chung
-- **Custom Hooks:** `useLocalStorage`, `useDebounce` và `useFilter`
-- **React Router:** định tuyến và truyền tham số recipe ID qua URL
-- **Error Boundary:** hiển thị trạng thái dự phòng khi route gặp lỗi
-- **Controlled Components:** quản lý input, select và các bộ lọc bằng React state
-
-## Installation
-
-### Yêu cầu
-
-- Node.js 20.19 trở lên
-- npm
-
-### Cài đặt và chạy
+Yêu cầu Node.js `20.19+` và npm.
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/congy1344/HuynhCongY-Demo-UXUI.git
 cd HuynhCongY-Demo-UXUI
-npm install
+npm ci
 npm run dev
 ```
 
-Sau khi chạy, mở địa chỉ được Vite hiển thị trong terminal, thường là:
+Vite sẽ in địa chỉ local trong terminal, mặc định là `http://localhost:5173`.
 
-```text
-http://localhost:5173
-```
-
-### Kiểm tra chất lượng
+## Kiểm tra chất lượng
 
 ```bash
+npm test
 npm run lint
 npm run build
+npm audit
 ```
 
-### Xem production build
-
-```bash
-npm run preview
-```
-
-Để khôi phục dữ liệu mẫu, xóa các key bắt đầu bằng `gather:` trong `localStorage` của trình duyệt.
+GitHub Actions chạy bốn gate đầu tiên (`npm ci`, test, lint, build) trên mỗi push và pull request. Muốn đặt lại dữ liệu demo, xóa các key bắt đầu bằng `gather:` trong `localStorage`.

@@ -12,10 +12,10 @@ import { useUI } from '../context/UIPreferencesContext';
 
 export default function RecipesPage() {
   const { recipes, isLoading, favorites, toggleFavorite } = useApp();
-  const { t } = useUI();
+  const { language, t } = useUI();
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All');
   const [sortBy, setSortBy] = useState('name');
-  const results = useFilter(recipes, useDebounce(search), category, sortBy);
-  return <PageWrapper><header className="page-header"><div><span className="eyebrow">{t('recipeIndex')}</span><h1>{t('findFavorite')}</h1><p>{t('recipeIntro')}</p></div><span className="eyebrow">{results.length} {t('results')}</span></header><FilterBar search={search} onSearch={setSearch} category={category} onCategory={setCategory} sortBy={sortBy} onSort={setSortBy} />{isLoading ? <SkeletonGrid /> : results.length ? <div className="recipe-grid">{results.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} isFavorited={favorites.includes(recipe.id)} onToggleFavorite={toggleFavorite} />)}</div> : <EmptyState title={t('noRecipes')} message={t('noRecipesMessage')} />}</PageWrapper>;
+  const results = useFilter(recipes, useDebounce(search), category, sortBy, language);
+  return <PageWrapper><header className="page-header"><div><h1>{t('findFavorite')}</h1><p>{t('recipeIntro')}</p></div><p className="result-count" aria-live="polite"><strong>{results.length}</strong> {t('results')}</p></header><FilterBar search={search} onSearch={setSearch} category={category} onCategory={setCategory} sortBy={sortBy} onSort={setSortBy} />{isLoading ? <SkeletonGrid /> : results.length ? <div className="recipe-grid">{results.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} isFavorited={favorites.includes(recipe.id)} onToggleFavorite={toggleFavorite} />)}</div> : <EmptyState title={t('noRecipes')} message={t('noRecipesMessage')} />}</PageWrapper>;
 }

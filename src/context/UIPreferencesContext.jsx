@@ -14,6 +14,7 @@ export function UIPreferencesProvider({ children }) {
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     document.documentElement.lang = language;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#111714' : '#f2f4f3');
   }, [theme, language]);
 
   const toggleLanguage = useCallback(() => setLanguage((value) => value === 'en' ? 'vi' : 'en'), [setLanguage]);
